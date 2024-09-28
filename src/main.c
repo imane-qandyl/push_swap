@@ -6,36 +6,41 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:25 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/09/28 16:36:07 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/09/28 19:20:12 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int	main(int argc, char **argv)
-{
-	int	size;
-	int	*arr;
-	int	i;
+int main(int argc, char **argv) {
+    if (argc < 2) {
+        ft_error();
+        return 1;
+    }
 
-	i = 0;
-	if (argc < 2)
-	{
-		ft_error();
-		return (1);
-	}
-	arr = convert_args_to_unique_int(argc, argv, &size);
-	if (!arr)
-	{
-		return (1);
-	}
-	radixsort(arr, size);
-	while (i < size)
-	{
-		printf("%d ", arr[i]);
-		i++;
-	}
-	printf("\n");
-	free(arr);
-	return (0);
+    int i = 1;
+    while (i < argc) {
+        if (is_empty_or_space(argv[i])) {
+            write(2, "Error\n", 6);
+            return 1;
+        }
+        i++;
+    }
+
+    int size;
+    int *arr = convert_args_to_int(argc, argv, &size);
+    if (!arr) {
+        return 1;
+    }
+
+    if (has_duplicates(arr, size)) {
+        write(2, "Error\n", 6);
+        free(arr);
+        return 1;
+    }
+
+    radix_sort(arr, size);
+    printarray(arr, size);
+    free(arr);
+    return 0;
 }
