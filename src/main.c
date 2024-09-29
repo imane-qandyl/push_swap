@@ -44,8 +44,11 @@ int	main(int argc, char **argv)
 		free(arr);
 		return (0);
 	}
+		
+	perform_sorting_operations(arr, size);
 	radix_sort(arr, size);
 	printarray(arr, size);
-	free(arr);
+	
+	free(arr); 
 	return (0);
 }

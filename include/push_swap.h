@@ -36,6 +36,11 @@ int		count_numbers_in_args(int argc, char **argv);
 void	ft_error(void);
 int		has_duplicates(int *array, int size);
 int		is_empty_or_space(const char *str);
-int	is_sorted(int *arr, int size);
+int		is_sorted(int *arr, int size);
+void 	perform_sorting_operations(int *arr, int size);
+void 	pa(int *arr_a, int *arr_b, int *size_a, int *size_b);
+void 	pb(int *arr_a, int *arr_b, int *size_a, int *size_b);
+void 	sa(int *arr, int size);
+
 
 #endif
