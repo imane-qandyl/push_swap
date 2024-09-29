@@ -12,35 +12,40 @@
 
 #include "push_swap.h"
 
-int main(int argc, char **argv) {
-    if (argc < 2) {
-        ft_error();
-        return 1;
-    }
+int	main(int argc, char **argv)
+{
+	int	i;
+	int	size;
+	int	*arr;
 
-    int i = 1;
-    while (i < argc) {
-        if (is_empty_or_space(argv[i])) {
-            write(2, "Error\n", 6);
-            return 1;
-        }
-        i++;
-    }
-
-    int size;
-    int *arr = convert_args_to_int(argc, argv, &size);
-    if (!arr) {
-        return 1;
-    }
-
-    if (has_duplicates(arr, size)) {
-        write(2, "Error\n", 6);
-        free(arr);
-        return 1;
-    }
-
-    radix_sort(arr, size);
-    printarray(arr, size);
-    free(arr);
-    return 0;
+	if (argc < 2)
+	{
+		ft_error();
+		return (1);
+	}
+	i = 1;
+	while (i < argc)
+	{
+		if (is_empty_or_space(argv[i]))
+		{
+			write(2, "Error\n", 6);
+			return (1);
+		}
+		i++;
+	}
+	arr = convert_args_to_int(argc, argv, &size);
+	if (!arr)
+	{
+		return (1);
+	}
+	if (has_duplicates(arr, size))
+	{
+		write(2, "Error\n", 6);
+		free(arr);
+		return (1);
+	}
+	radix_sort(arr, size);
+	printarray(arr, size);
+	free(arr);
+	return (0);
 }
