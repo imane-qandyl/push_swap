@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:42:48 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/09/29 10:34:31 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/09/29 12:08:05 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,12 @@ void	countsort(int arr[], int n, int exp)
 	int	output[n];
 	int	count[10];
 	int	i;
-
-	count[10] = {0};
+	
+	i = 0;
+    while (i < 10) {
+        count[i] = 0;
+        i++;
+    }
 	i = 0;
 	while (i < n)
 	{
@@ -79,13 +83,9 @@ void	radix_sort(int arr[], int n)
 	while (i < n)
 	{
 		if (arr[i] < 0)
-		{
 			negative[neg_count++] = -arr[i];
-		}
 		else
-		{
 			positive[pos_count++] = arr[i];
-		}
 		i++;
 	}
 	if (pos_count > 0)
