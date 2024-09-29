@@ -13,7 +13,8 @@
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 # define MAX_SIZE 100 // Define a maximum size for the stacks
-# define ERROR_MESSAGE "error"
+#define MAXINT 2147483647
+#define MININT -2147483648
 
 # include "../libft/libft.h"
 # include <limits.h>

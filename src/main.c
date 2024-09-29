@@ -18,11 +18,6 @@ int	main(int argc, char **argv)
 	int	size;
 	int	*arr;
 
-	if (argc < 2)
-	{
-		ft_error();
-		return (1);
-	}
 	i = 1;
 	while (i < argc)
 	{

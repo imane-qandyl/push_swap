@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:42 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/09/29 19:33:12 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:51:29 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,7 @@
 
 void	ft_error(void)
 {
-	const char	*error_msg;
-	const char	*ptr;
-
-	error_msg = "Error\n";
-	ptr = error_msg;
-	while (*ptr)
-	{
-		write(1, ptr++, 1);
-	}
+	write(1, "Error\n", 6);
 	exit(1);
 }
 void	free_tokens(char **tokens)
@@ -36,6 +28,34 @@ void	free_tokens(char **tokens)
 		j++;
 	}
 	free(tokens);
+}
+
+int	ft_safe_atoi(const char *str)
+{
+	long	num;
+	int		sign;
+
+	num = 0;
+	sign = 1;
+	while (*str == ' ' || (*str >= 9 && *str <= 13))
+		str++;
+	if (*str == '-')
+	{
+		sign = -1;
+		str++;
+	}
+	else if (*str == '+')
+		str++;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			ft_error();
+		num = num * 10 + (*str - '0');
+		if ((num * sign) > MAXINT || (num * sign) < MININT)
+			ft_error();
+		str++;
+	}
+	return ((int)(num * sign));
 }
 
 int	count_numbers_in_args(int argc, char **argv)
@@ -86,9 +106,11 @@ int	*convert_args_to_int(int argc, char **argv, int *size)
 	int		j;
 
 	count = count_numbers_in_args(argc, argv);
+	if (count == 0)
+		exit(0);
 	arr = malloc(count * sizeof(int));
 	if (!arr)
-		return (NULL);
+		ft_error();
 	index = 0;
 	i = 1;
 	while (i < argc)
@@ -97,24 +119,20 @@ int	*convert_args_to_int(int argc, char **argv, int *size)
 		if (!tokens)
 		{
 			free(arr);
-			return (NULL);
+			ft_error();
 		}
 		j = 0;
 		while (tokens[j])
 		{
-			if (ft_strlen(tokens[j]) == 0)
-			{
-				free(tokens);
-				free(arr);
-				ft_error();
-			}
-			arr[index++] = ft_atoi(tokens[j]);
+			arr[index++] = ft_safe_atoi(tokens[j]);
 			j++;
 		}
-		free(tokens);
+		free_tokens(tokens);
 		i++;
 	}
 	*size = count;
+	if (has_duplicates(arr, count))
+		ft_error();
 	return (arr);
 }
 
