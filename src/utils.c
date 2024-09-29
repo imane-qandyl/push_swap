@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:42 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/09/29 10:47:59 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/09/29 19:33:12 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,18 @@ void	ft_error(void)
 	}
 	exit(1);
 }
+void	free_tokens(char **tokens)
+{
+	int	j;
+
+	j = 0;
+	while (tokens[j])
+	{
+		free(tokens[j]);
+		j++;
+	}
+	free(tokens);
+}
 
 int	count_numbers_in_args(int argc, char **argv)
 {
@@ -39,26 +51,26 @@ int	count_numbers_in_args(int argc, char **argv)
 	{
 		tokens = ft_split(argv[i], ' ');
 		if (!tokens)
-			ft_error(); // Ensure split allocation was successful
+			ft_error();
 		j = 0;
 		while (tokens[j])
 		{
 			if (ft_strlen(tokens[j]) == 0 || is_empty_or_space(tokens[j]))
 			{
-				free(tokens);
+				free_tokens(tokens);
 				ft_error();
 			}
 			if (!ft_isdigit(tokens[j][0]) && !(tokens[j][0] == '-'
 					&& ft_isdigit(tokens[j][1])) && !(tokens[j][0] == '+'
 					&& ft_isdigit(tokens[j][1])))
 			{
-				free(tokens);
+				free_tokens(tokens);
 				ft_error();
 			}
 			count++;
 			j++;
 		}
-		free(tokens);
+		free_tokens(tokens);
 		i++;
 	}
 	return (count);
