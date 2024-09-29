@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:42:48 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/09/29 09:53:48 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/09/29 10:34:31 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ int	getmax(int arr[], int n)
 	while (i < n)
 	{
 		if (arr[i] > mx)
-		{
 			mx = arr[i];
-		}
 		i++;
 	}
 	return (mx);
@@ -32,11 +30,10 @@ int	getmax(int arr[], int n)
 
 void	countsort(int arr[], int n, int exp)
 {
-	int	*output;
+	int	output[n];
 	int	count[10];
 	int	i;
 
-	output = (int *)malloc(n * sizeof(int));
 	count[10] = {0};
 	i = 0;
 	while (i < n)
@@ -63,20 +60,19 @@ void	countsort(int arr[], int n, int exp)
 		arr[i] = output[i];
 		i++;
 	}
-	free(output);
 }
 
 void	radix_sort(int arr[], int n)
 {
-	int	*positive;
-	int	*negative;
+	int	positive[n];
+	int	negative[n];
 	int	pos_count;
 	int	neg_count;
 	int	i;
+	int	m;
+	int	exp;
 	int	index;
 
-	positive = (int *)malloc(n * sizeof(int));
-	negative = (int *)malloc(n * sizeof(int));
 	pos_count = 0;
 	neg_count = 0;
 	i = 0;
@@ -94,34 +90,39 @@ void	radix_sort(int arr[], int n)
 	}
 	if (pos_count > 0)
 	{
-		countsort(positive, pos_count, 1);
+		m = getmax(positive, pos_count);
+		exp = 1;
+		while (m / exp > 0)
+		{
+			countsort(positive, pos_count, exp);
+			exp *= 10;
+		}
 	}
 	if (neg_count > 0)
 	{
-		countsort(negative, neg_count, 1);
+		m = getmax(negative, neg_count);
+		exp = 1;
+		while (m / exp > 0)
+		{
+			countsort(negative, neg_count, exp);
+			exp *= 10;
+		}
 	}
 	index = 0;
-	i = neg_count - 1;
-	while (i >= 0)
+	while (neg_count > 0)
 	{
-		arr[index++] = -negative[i];
-		i--;
+		arr[index++] = -negative[--neg_count];
 	}
 	i = 0;
 	while (i < pos_count)
 	{
-		arr[index++] = positive[i];
-		i++;
+		arr[index++] = positive[i++];
 	}
-	free(positive);
-	free(negative);
 }
 
 void	printarray(int arr[], int n)
 {
-	int	i;
-
-	i = 0;
+	int i = 0;
 	while (i < n)
 	{
 		printf("%d ", arr[i]);
