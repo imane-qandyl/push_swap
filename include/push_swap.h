@@ -36,5 +36,6 @@ int		count_numbers_in_args(int argc, char **argv);
 void	ft_error(void);
 int		has_duplicates(int *array, int size);
 int		is_empty_or_space(const char *str);
+int	is_sorted(int *arr, int size);
 
 #endif

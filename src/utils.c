@@ -29,6 +29,19 @@ void	free_tokens(char **tokens)
 	}
 	free(tokens);
 }
+int	is_sorted(int *arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (arr[i] > arr[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 int	ft_safe_atoi(const char *str)
 {

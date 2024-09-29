@@ -39,6 +39,11 @@ int	main(int argc, char **argv)
 		free(arr);
 		return (1);
 	}
+	if (is_sorted(arr, size))
+	{
+		free(arr);
+		return (0);
+	}
 	radix_sort(arr, size);
 	printarray(arr, size);
 	free(arr);
