@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 17:35:04 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 22:58:30 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 23:06:18 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int	main(int argc, char **argv)
 
 	if (argc < 2)
 	{
-		write(1, "Error\n", 6);
 		return (1);
 	}
 	size = 0;
@@ -59,6 +58,7 @@ int	main(int argc, char **argv)
 	if (is_sorted(array, size))
 	{
 		write(1, "Error\n", 6);
+		return (0);
 	}
 	radix_sort(array, size);
 	print_array(array, size);
