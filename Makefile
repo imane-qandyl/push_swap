@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -Iinclude
-SRCS = src/main.c src/radix.c src/utils.c src/logic.c
+CFLAGS = -Wall -Wextra -Werror 
+SRCS = src/main.c src/radix.c src/utils.c
 OBJS = $(SRCS:.c=.o)
 NAME = push_swap
 LIBFT_DIR = libft
@@ -28,3 +28,4 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+

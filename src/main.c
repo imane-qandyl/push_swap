@@ -5,50 +5,32 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/28 16:14:25 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/09/28 19:20:12 by imqandyl         ###   ########.fr       */
+/*   Created: 2024/10/04 17:35:04 by imqandyl          #+#    #+#             */
+/*   Updated: 2024/10/04 20:25:40 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#include "../include/push_swap.h"
 
 int	main(int argc, char **argv)
 {
-	int	i;
 	int	size;
-	int	*arr;
+	int	*array;
 
-	i = 1;
-	while (i < argc)
+	if (argc < 2)
 	{
-		if (is_empty_or_space(argv[i]))
-		{
-			write(2, "Error\n", 6);
-			return (1);
-		}
-		i++;
-	}
-	arr = convert_args_to_int(argc, argv, &size);
-	if (!arr)
-	{
+		write(1, "Error\n", 6);
 		return (1);
 	}
-	if (has_duplicates(arr, size))
+	size = 0;
+	array = convert_args_to_int(argc, argv, &size);
+	if (!array)
 	{
-		write(2, "Error\n", 6);
-		free(arr);
+		write(1, "Error\n", 6);
 		return (1);
 	}
-	if (is_sorted(arr, size))
-	{
-		free(arr);
-		return (0);
-	}
-		
-	perform_sorting_operations(arr, size);
-	radix_sort(arr, size);
-	printarray(arr, size);
-	
-	free(arr); 
+	radix_sort(array, size);
+	print_array(array, size);
+	free(array);
 	return (0);
 }
