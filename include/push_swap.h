@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:25:27 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 21:38:33 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:33:45 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ int		ft_safe_atoi(const char *str);
 int		*convert_args_to_int(int argc, char **argv, int *size);
 int		has_duplicates(int *array, int size);
 void	initialize_count(int *count, int size);
+int		is_sorted(int *arr, int size);
 
 #endif

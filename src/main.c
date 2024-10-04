@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 17:35:04 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 21:38:16 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:58:30 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,20 @@ void	print_array(int arr[], int n)
 	printf("\n");
 }
 
+int	is_sorted(int *arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		if (arr[i] > arr[i + 1])
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 int	main(int argc, char **argv)
 {
 	int	size;
@@ -41,6 +55,10 @@ int	main(int argc, char **argv)
 	{
 		write(1, "Error\n", 6);
 		return (1);
+	}
+	if (is_sorted(array, size))
+	{
+		write(1, "Error\n", 6);
 	}
 	radix_sort(array, size);
 	print_array(array, size);

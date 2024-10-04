@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:42 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 20:34:59 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:58:08 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_safe_atoi(const char *str)
 		result = result * 10 + (str[i] - '0');
 		if (result * sign > MAXINT || result * sign < MININT)
 		{
-			return (0);
+			ft_error();
 		}
 		i++;
 	}
@@ -57,7 +57,7 @@ int	is_digit_string(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (0);
+			ft_error();
 		i++;
 	}
 	return (1);

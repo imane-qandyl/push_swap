@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:24:29 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 22:05:04 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:30:20 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,29 +58,42 @@ void	initialize_count(int *count, int size)
 
 void	count_sort(int arr[], int n, int exp, int min_val)
 {
-	int	*output;
-	int	count[10];
-	int	i;
+	long long	*output;
+	int			count[10];
+	int			i;
+	int			index;
 
-	output = (int *)malloc(n * sizeof(int));
+	output = (long long *)malloc(n * sizeof(long long));
 	if (output == NULL)
 		return ;
 	initialize_count(count, 10);
 	i = 0;
-	while (i++ < n)
-		count[(arr[i - 1] - min_val) / exp % 10]++;
-	i = 1;
-	while (i++ < 10)
-		count[i - 1] += count[i - 2];
-	i = n;
-	while (--i >= 0)
+	while (i < n)
 	{
-		output[count[(arr[i] - min_val) / exp % 10] - 1] = arr[i];
-		count[(arr[i] - min_val) / exp % 10]--;
+		index = (arr[i] - min_val) / exp % 10;
+		count[index]++;
+		i++;
+	}
+	i = 1;
+	while (i < 10)
+	{
+		count[i] += count[i - 1];
+		i++;
+	}
+	i = n - 1;
+	while (i >= 0)
+	{
+		index = (arr[i] - min_val) / exp % 10;
+		output[count[index] - 1] = arr[i];
+		count[index]--;
+		i--;
 	}
 	i = 0;
-	while (i++ < n)
+	while (i < n)
+	{
 		arr[i] = output[i];
+		i++;
+	}
 	free(output);
 }
 
