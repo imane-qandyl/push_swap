@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 20:24:29 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 20:29:15 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 22:05:04 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,42 +44,44 @@ int	get_min(int arr[], int n)
 	return (mn);
 }
 
+void	initialize_count(int *count, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		count[i] = 0;
+		i++;
+	}
+}
+
 void	count_sort(int arr[], int n, int exp, int min_val)
 {
-	int	output[n];
+	int	*output;
 	int	count[10];
 	int	i;
-	int	index;
-	int	index;
 
-	count[10] = {0};
+	output = (int *)malloc(n * sizeof(int));
+	if (output == NULL)
+		return ;
+	initialize_count(count, 10);
 	i = 0;
-	while (i < n)
-	{
-		index = (arr[i] - min_val) / exp % 10;
-		count[index]++;
-		i++;
-	}
+	while (i++ < n)
+		count[(arr[i - 1] - min_val) / exp % 10]++;
 	i = 1;
-	while (i < 10)
+	while (i++ < 10)
+		count[i - 1] += count[i - 2];
+	i = n;
+	while (--i >= 0)
 	{
-		count[i] += count[i - 1];
-		i++;
-	}
-	i = n - 1;
-	while (i >= 0)
-	{
-		index = (arr[i] - min_val) / exp % 10;
-		output[count[index] - 1] = arr[i];
-		count[index]--;
-		i--;
+		output[count[(arr[i] - min_val) / exp % 10] - 1] = arr[i];
+		count[(arr[i] - min_val) / exp % 10]--;
 	}
 	i = 0;
-	while (i < n)
-	{
+	while (i++ < n)
 		arr[i] = output[i];
-		i++;
-	}
+	free(output);
 }
 
 void	radix_sort(int arr[], int n)
@@ -96,17 +98,4 @@ void	radix_sort(int arr[], int n)
 		count_sort(arr, n, exp, min_val);
 		exp *= 10;
 	}
-}
-
-void	print_array(int arr[], int n)
-{
-	int	i;
-
-	i = 0;
-	while (i < n)
-	{
-		printf("%d ", arr[i]);
-		i++;
-	}
-	printf("\n");
 }

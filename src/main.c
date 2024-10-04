@@ -6,11 +6,24 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 17:35:04 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 20:25:40 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 21:38:16 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
+
+void	print_array(int arr[], int n)
+{
+	int	i;
+
+	i = 0;
+	while (i < n)
+	{
+		printf("%d ", arr[i]);
+		i++;
+	}
+	printf("\n");
+}
 
 int	main(int argc, char **argv)
 {

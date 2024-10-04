@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:42 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 20:26:20 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/04 20:34:59 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_safe_atoi(const char *str)
 	long	result;
 	int		sign;
 	int		i;
-	
+
 	result = 0;
 	sign = 1;
 	i = 0;
@@ -44,7 +44,7 @@ int	ft_safe_atoi(const char *str)
 		}
 		i++;
 	}
-	return (int)(result * sign);
+	return ((int)(result * sign));
 }
 
 int	is_digit_string(char *str)
@@ -95,13 +95,9 @@ int	*convert_args_to_int(int argc, char **argv, int *size)
 	while (i < argc)
 	{
 		if (is_digit_string(argv[i]))
-		{
 			count++;
-		}
 		else
-		{
 			ft_error();
-		}
 		i++;
 	}
 	arr = malloc(count * sizeof(int));
@@ -112,9 +108,7 @@ int	*convert_args_to_int(int argc, char **argv, int *size)
 	while (i < argc)
 	{
 		if (is_digit_string(argv[i]))
-		{
 			arr[index++] = ft_safe_atoi(argv[i]);
-		}
 		i++;
 	}
 	if (has_duplicates(arr, count))
