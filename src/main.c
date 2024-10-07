@@ -56,10 +56,7 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	if (is_sorted(array, size))
-	{
-		write(1, "Error\n", 6);
 		return (0);
-	}
 	radix_sort(array, size);
 	print_array(array, size);
 	free(array);
