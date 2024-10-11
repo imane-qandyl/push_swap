@@ -6,7 +6,7 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:42 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/04 22:58:08 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/11 19:45:52 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_error(void)
 	exit(1);
 }
 
-int	ft_safe_atoi(const char *str)
+long long int	ft_safe_atoi(const char *str)
 {
-	long	result;
+	long long	result;
 	int		sign;
 	int		i;
 
@@ -40,11 +40,11 @@ int	ft_safe_atoi(const char *str)
 		result = result * 10 + (str[i] - '0');
 		if (result * sign > MAXINT || result * sign < MININT)
 		{
-			ft_error();
+			return (2147483648LL);
 		}
 		i++;
 	}
-	return ((int)(result * sign));
+	return (result * sign);
 }
 
 int	is_digit_string(char *str)
@@ -56,7 +56,7 @@ int	is_digit_string(char *str)
 		i++;
 	while (str[i])
 	{
-		if (!ft_isdigit(str[i]))
+		if (!ft_isdigit((unsigned char)str[i]))
 			ft_error();
 		i++;
 	}
@@ -89,7 +89,7 @@ int	*convert_args_to_int(int argc, char **argv, int *size)
 	int	i;
 	int	*arr;
 	int	index;
-
+	long long value;
 	count = 0;
 	i = 1;
 	while (i < argc)
@@ -108,11 +108,16 @@ int	*convert_args_to_int(int argc, char **argv, int *size)
 	while (i < argc)
 	{
 		if (is_digit_string(argv[i]))
-			arr[index++] = ft_safe_atoi(argv[i]);
+		{
+			value = ft_safe_atoi(argv[i]);
+			if (value == 2147483648LL)
+				(free(arr), ft_error());
+			arr[index++] = (int)value;
+		}
 		i++;
 	}
 	if (has_duplicates(arr, count))
-		ft_error();
+		(free(arr), ft_error());
 	*size = count;
 	return (arr);
 }
