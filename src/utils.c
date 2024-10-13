@@ -27,13 +27,17 @@ long long int	ft_safe_atoi(const char *str)
 	result = 0;
 	sign = 1;
 	i = 0;
-	while (str[i] == ' ')
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	if (str[i] == '-' || str[i] == '+')
 	{
 		if (str[i] == '-')
 			sign = -1;
 		i++;
+	}
+	if (str[i] < '0' || str[i] > '9')
+	{
+		ft_error();
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
