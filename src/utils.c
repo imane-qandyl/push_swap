@@ -6,122 +6,123 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 16:14:42 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/11 19:45:52 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/14 01:47:05 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void	ft_error(void)
+void	exit_if_sorted_or_has_duplicate(t_stacks *s, int i)
 {
-	write(1, "Error\n", 6);
-	exit(1);
+	int	j;
+
+	j = 0;
+	if (i == 0)
+	{
+		while (i < s->a_size)
+		{
+			j = i + 1;
+			while (j < s->a_size)
+			{
+				if (s->a[i] == s->a[j])
+					free_and_exit(s, "Error\n");
+				j++;
+			}
+			i++;
+		}
+	}
+	if (is_sorted(s))
+		free_and_exit(s, NULL);
 }
 
-long long int	ft_safe_atoi(const char *str)
+void	parse_args(t_stacks *s)
 {
-	long long	result;
-	int		sign;
+	char	**tmp;
 	int		i;
+	int		z;
 
-	result = 0;
+	z = 0;
+	tmp = ft_split(s->join_args, ' ');
+	i = 0;
+	while (tmp[i] != NULL && tmp[i][0] != '\0')
+	{
+		s->a[z++] = ft_atol(tmp[i++], s);
+		free(tmp[i - 1]);
+	}
+	free(tmp);
+}
+
+void	initialize_stacks(int argc, char **argv, t_stacks *s)
+{
+	int	i;
+	int	total_words;
+
+	i = 1;
+	total_words = 0;
+	while (i < argc)
+	{
+		total_words += ft_count_words(argv[i], ' ');
+		i++;
+	}
+	s->a_size = total_words;
+	s->b_size = 0;
+	s->a = malloc(s->a_size * sizeof(int));
+	s->b = malloc(s->a_size * sizeof(int));
+	if (!s->a || !s->b)
+		free_and_exit(s, "Error\n");
+}
+
+void	create_index(t_stacks *s)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		*new_a;
+
+	new_a = malloc(s->a_size * sizeof * new_a);
+	if (new_a == NULL)
+		free_and_exit(s, "Error\n");
+	i = -1;
+	while (++i < s->a_size)
+	{
+		k = 0;
+		j = -1;
+		while (++j < s->a_size)
+			if (s->a[i] > s->a[j])
+				k++;
+		new_a[i] = k;
+	}
+	i = s->a_size;
+	while (i--)
+		s->a[i] = new_a[i];
+	free(new_a);
+}
+
+int	ft_atol(const char *str, t_stacks *s)
+{
+	int			i;
+	long		sign;
+	long long	res;
+
+	res = 0;
 	sign = 1;
 	i = 0;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if (str[i] == '-' || str[i] == '+')
+	if ((str[i] == '+' || str[i] == '-'))
 	{
 		if (str[i] == '-')
 			sign = -1;
 		i++;
 	}
 	if (str[i] < '0' || str[i] > '9')
-	{
-		ft_error();
-	}
+		free_and_exit(s, "Error\n");
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		result = result * 10 + (str[i] - '0');
-		if (result * sign > MAXINT || result * sign < MININT)
-		{
+		res = res * 10 + (str[i] - '0');
+		if (res * sign > MAXINT || res * sign < MININT)
 			return (2147483648LL);
-		}
 		i++;
 	}
-	return (result * sign);
-}
-
-int	is_digit_string(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit((unsigned char)str[i]))
-			ft_error();
-		i++;
-	}
-	return (1);
-}
-
-int	has_duplicates(int *array, int size)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < size)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (array[i] == array[j])
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	*convert_args_to_int(int argc, char **argv, int *size)
-{
-	int	count;
-	int	i;
-	int	*arr;
-	int	index;
-	long long value;
-	count = 0;
-	i = 1;
-	while (i < argc)
-	{
-		if (is_digit_string(argv[i]))
-			count++;
-		else
-			ft_error();
-		i++;
-	}
-	arr = malloc(count * sizeof(int));
-	if (!arr)
-		ft_error();
-	index = 0;
-	i = 1;
-	while (i < argc)
-	{
-		if (is_digit_string(argv[i]))
-		{
-			value = ft_safe_atoi(argv[i]);
-			if (value == 2147483648LL)
-				(free(arr), ft_error());
-			arr[index++] = (int)value;
-		}
-		i++;
-	}
-	if (has_duplicates(arr, count))
-		(free(arr), ft_error());
-	*size = count;
-	return (arr);
+	return ((int)(res * sign));
 }

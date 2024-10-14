@@ -6,44 +6,72 @@
 /*   By: imqandyl <imqandyl@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 16:09:24 by imqandyl          #+#    #+#             */
-/*   Updated: 2024/10/11 19:56:55 by imqandyl         ###   ########.fr       */
+/*   Updated: 2024/10/14 00:39:46 by imqandyl         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/push_swap.h"
 
-void pb(int *stack_a, int *stack_b, int *top_a, int *top_b) {
-    if (*top_a >= 0) {
-        stack_b[++(*top_b)] = stack_a[(*top_a)--];
-        printf("pb\n");
-    }
+void	swap(char *str, int *array, int size)
+{
+	int	tmp;
+
+	if (size <= 0)
+		return ;
+	tmp = array[0];
+	array[0] = array[1];
+	array[1] = tmp;
+	ft_putendl_fd(str, 1);
 }
 
-void pa(int *stack_a, int *stack_b, int *top_a, int *top_b) {
-    if (*top_b >= 0) {
-        stack_a[++(*top_a)] = stack_b[(*top_b)--];
-        printf("pa\n");
-    }
+void	push(char *str, t_stacks *s)
+{
+	int	tmp;
+
+	if (ft_strncmp(str, "pa", 3) == 0)
+	{
+		if (s->b_size <= 0)
+			return ;
+		tmp = s->b[0];
+		ft_memmove(s->a + 1, s->a, sizeof(int) * s->a_size);
+		s->a[0] = tmp;
+		s->b_size--;
+		ft_memmove(s->b, s->b + 1, sizeof(int) * s->b_size);
+		s->a_size++;
+	}
+	else if (ft_strncmp(str, "pb", 3) == 0)
+	{
+		if (s->a_size <= 0)
+			return ;
+		tmp = s->a[0];
+		ft_memmove(s->b + 1, s->b, sizeof(int) * s->b_size);
+		s->b[0] = tmp;
+		s->a_size--;
+		ft_memmove(s->a, s->a + 1, sizeof(int) * s->a_size);
+		s->b_size++;
+	}
+	ft_putendl_fd(str, 1);
 }
 
-void ra(int *stack_a, int top_a) {
-    if (top_a > 0) {
-        int temp = stack_a[0];
-        int i = 0;
-        while (i < top_a) {
-            stack_a[i] = stack_a[i + 1];
-            i++;
-        }
-        stack_a[top_a] = temp;
-        printf("ra\n");
-    }
-}
+void	rotate(int *array, int size, char *direction, char *list)
+{
+	int	tmp;
 
-void sa(int *stack_a) {
-    if (stack_a[0] != stack_a[1]) {
-        int temp = stack_a[0];
-        stack_a[0] = stack_a[1];
-        stack_a[1] = temp;
-        printf("sa\n");
-    }
+	if (size < 0)
+		return ;
+	if (ft_strncmp(direction, "up", 5) == 0)
+	{
+		tmp = array[0];
+		ft_memmove(array, array + 1, sizeof(int) * (size - 1));
+		array[size - 1] = tmp;
+		write(1, "r", 1);
+	}
+	else if (ft_strncmp(direction, "down", 5) == 0)
+	{
+		tmp = array[size - 1];
+		ft_memmove(array + 1, array, sizeof(int) * (size - 1));
+		array[0] = tmp;
+		write(1, "rr", 2);
+	}
+	ft_putendl_fd(list, 1);
 }
