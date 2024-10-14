@@ -121,7 +121,7 @@ int	ft_atol(const char *str, t_stacks *s)
 	{
 		res = res * 10 + (str[i] - '0');
 		if (res * sign > MAXINT || res * sign < MININT)
-			free_and_exit(s, "Error\n");;
+			free_and_exit(s, "Error\n");
 		i++;
 	}
 	return ((int)(res * sign));
